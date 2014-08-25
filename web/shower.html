@@ -26,7 +26,8 @@
     <div class="container theme-showcase">
         <div class="jumbotron">
             <p>אפליקציה זו משתמשת בנתוני היסטוריית האזעקות של פיקוד העורף בשביל לנסות להעריך האם כדאי להתקלח עכשיו.</p>
-            <p id="mainform" class="hidden">
+            <div id="mainform" class="hidden">
+                <p>
                 טווח בטחון: <select>
                     <option value="15">רבע שעה</option>
                     <option value="30">חצי שעה</option>
@@ -34,9 +35,10 @@
                     <option value="120">שעתיים</option>
                     <option value="180">3 שעות</option>
                 </select>
-                &#160;&#160;&#160;
+                </p><p>
                 יישוב: <input class="typeahead" dir="rtl" type="text"/>
-            </p>
+                </p>
+            </div>
             <h5>טווח הבטחון זה טווח הזמן המקסימלי בין השעה הנוכחית לשעה בתאריך אחר שבה הייתה אזעקה</h5>
             <p id="loading_data" class="well">טוען נתונים, המתינו בבקשה.</p>
             <div id="shower_answer" class="hidden well">
@@ -44,9 +46,12 @@
                 <h2 class="hidden no">אולי עדיף לדחות את המקלחת</h2>
                 <h3 class="details"></h3>
             </div>
-            <h6>האפליקציה מחשבת האם בשעה דומה היו אזעקות באזורך, מתוך הנחה (שייתכן שהיא שגויה) שיש שעות מועדפות על החמאס לירי.</h6>
-            <h6>מפתחים מוזמנים למזלג את הפרוייקט בגיטהאב ו/או לקחת את הנתונים בפורמט json מהלינקים הבאים: <a href="../scraper/alerts.json">alerts</a> <a href="../scraper/regions.json">regions</a></h6>
-            <h6>מקור הנתונים: <a href="http://www.oref.org.il/11034-he/Pakar.aspx">http://www.oref.org.il/11034-he/Pakar.aspx</a></h6>
+            <h5>האפליקציה מחשבת האם בשעה דומה היו אזעקות באזורך, מתוך הנחה (שייתכן שהיא שגויה) שיש שעות מועדפות על החמאס לירי.</h5>
+            <h5>מפתחים מוזמנים למזלג את הפרוייקט <a href="https://github.com/hasadna/oref-alarms-history">בגיטהאב</a> ו/או לקחת את הנתונים בפורמט json מהלינקים הבאים: <a href="../scraper/alerts.json">alerts</a> <a href="../scraper/regions.json">regions</a></h5>
+            <h5>מקור הנתונים: <a href="http://www.oref.org.il/11034-he/Pakar.aspx">http://www.oref.org.il/11034-he/Pakar.aspx</a></h5>
+            <h5>
+                פרוייקט של <a href="http://www.hasadna.org.il">הסדנא לידע ציבורי</a>
+            </h5>
         </div>
     </div>
 </body>
