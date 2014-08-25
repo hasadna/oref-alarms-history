@@ -5,7 +5,7 @@ main.controller = {
 
     start: function(){
         main.model.loadData(function(){
-            main.view.initialDataIsReady();
+            main.view.initialDataIsReady(main.model.getFirstDate(), main.model.getLastDate());
         });
     },
 
@@ -98,9 +98,29 @@ main.model = {
         };
     },
 
+    getFirstDate: function() {
+        return this._firstDate;
+    },
+
+    getLastDate: function() {
+        return this._lastDate;
+    },
+
     _processData: function(regions, alerts, cb) {
         var self = this;
         self._alerts = alerts;
+        var firstDate = null;
+        var lastDate = null;
+        $.each(alerts, function(datestring, regions){
+            var datetime = datestring.split(' ');
+            var date = datetime[0].split('/');
+            var time = datetime[1].split(':');
+            var d = new Date(parseInt(date[2]), parseInt(date[1]), parseInt(date[0]), parseInt(time[0]), parseInt(time[1]), 0, 0);
+            if (firstDate == null || d < firstDate) firstDate = d;
+            if (lastDate == null || d > lastDate) lastDate = d;
+        });
+        self._firstDate = firstDate;
+        self._lastDate = lastDate;
         self._cities = [];
         self._regions = [];
         $.each(regions, function(i, region) {
@@ -130,7 +150,7 @@ main.view = {
 
     curTypeaheadObj: null,
 
-    initialDataIsReady: function(){
+    initialDataIsReady: function(firstDate, lastDate){
         $('#mainform').removeClass('hidden');
         $('#loading_data').addClass('hidden');
         this._initTypeahead();
@@ -138,6 +158,7 @@ main.view = {
         $('#mainform select').bind('change', function(){
             main.controller.onTypeaheadSelected(self.curTypeaheadObj);
         });
+        $('#last-alert-date').html(''+lastDate.getDate()+'/'+lastDate.getMonth()+'/'+lastDate.getFullYear());
     },
 
     setShowerAnswer: function(ans, lastalerts, nearestalert){
