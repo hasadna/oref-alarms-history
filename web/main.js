@@ -79,7 +79,7 @@ main.model = {
         var lastalert = '';
         var lastalerts = [];
         $.each(self._alerts, function(datetime, region_names){
-            if ($.inArray(name, region_names) > -1) {
+            if (self._isNameInRegionNames(name, region_names)) {
                 lastalerts.push(datetime);
                 var minshours = datetime.split(' ')[1].split(':');
                 var mins = parseInt(minshours[0])*60+parseInt(minshours[1]);
@@ -104,6 +104,45 @@ main.model = {
 
     getLastDate: function() {
         return this._lastDate;
+    },
+
+    _isNameInRegionNames: function(name, region_names){
+        var ans = false;
+        if ($.inArray(name, region_names) > -1) {
+            ans = true;
+        } else {
+            // for some reason, sometimes the name is different then it appears in the region_names
+            // in this case, try to match the region number
+            var num = this._getRegionNumber(name);
+            for (var i = 0; i < region_names.length; i++) {
+                var region_name = region_names[i];
+                if (num != false && num == this._getRegionNumber(region_name)) {
+                    ans = true;
+                } else {
+                    namearr = name.split(' ');
+                    var allIn = true;
+                    $.each(namearr, function(j, sname) {
+                        if (sname.length > 0 && region_name.indexOf(sname) < 0) {
+                            allIn = false;
+                        }
+                    });
+                    if (allIn) ans = true;
+                }
+                if (ans) break;
+            }
+        }
+        if (ans) console.log(name, region_names);
+        return ans;
+    },
+
+    _getRegionNumber: function(name) {
+        name = name.split(' ');
+        for (var i = 0; i < name.length; i++) {
+            var sname = $.trim(name[i]);
+            var num = parseInt(sname);
+            if (!isNaN(num)) return num;
+        }
+        return false;
     },
 
     _processData: function(regions, alerts, cb) {
